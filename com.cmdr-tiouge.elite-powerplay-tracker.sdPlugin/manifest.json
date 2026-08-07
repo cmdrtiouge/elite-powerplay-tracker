@@ -1,0 +1,47 @@
+{
+	"Name": "Elite PowerPlay Tracker",
+	"Version": "0.1.0.0",
+	"Author": "CMDR TioUge",
+	"Actions": [
+		{
+			"Name": "Contadore de Méritos",
+			"UUID": "com.cmdr-tiouge.elite-powerplay-tracker.powerplay",
+			"Icon": "imgs/actions/counter/Meritos",
+			"Tooltip": "Muestrta tus Méritos totales y lleva la cuenta de los nuevos Méritos.",
+			"PropertyInspectorPath": "ui/increment-counter.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/counter/key",
+					"TitleAlignment": "middle"
+				}
+			]
+		}
+	],
+	"Category": "Elite PowerPlay Tracker",
+	"CategoryIcon": "imgs/plugin/EliteDangerousTools",
+	"CodePath": "bin/plugin.js",
+	"Description": "Contador de méritos de PowerPlay para Elite Dangerous",
+	"Icon": "imgs/plugin/EliteDangerousTools",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "7.1"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "24",
+		"Debug": "enabled"
+	},
+	"UUID": "com.cmdr-tiouge.elite-powerplay-tracker"
+}

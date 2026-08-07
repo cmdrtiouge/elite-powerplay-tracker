@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Tracker Settings</title>
+
+    <script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
+</head>
+
+<body>
+
+    <sdpi-item label="Méritos Totales Font Size (250)">
+        <input id="totalFontSize" type="number" min="50" max="500" value="250">
+    </sdpi-item>
+
+
+    <sdpi-item label="Méritos Ganados Font Size (250)">
+        <input id="gainedFontSize" type="number" min="50" max="500" value="250">
+    </sdpi-item>
+
+
+    <sdpi-item label="Velocidad (333)">
+        <input id="totalSpeed" type="number" min="20" max="1000" value="500">
+    </sdpi-item>
+
+<!--
+    <sdpi-item label="Velocidad Méritos Ganados (333)">
+        <input id="gainedSpeed" type="number" min="20" max="1000" value="333">
+    </sdpi-item>
+-->
+
+    <sdpi-item label="Posición Méritos Totales(400)">
+        <input id="totalY" type="number" min="0" max="1024" value="400">
+    </sdpi-item>
+
+
+    <sdpi-item label="Posición Méritos Ganados (800)">
+        <input id="gainedY" type="number" min="0" max="1024" value="800">
+    </sdpi-item>
+
+    <hr>
+
+    <sdpi-item label="Color Power en Méritos Totales">
+        <input type="checkbox" setting="totalUsePowerColor" checked>
+    </sdpi-item>
+
+    <sdpi-item label="Custom Color en Méritos Totales">
+        <input type="color" setting="totalColor" value="#ffffff">
+    </sdpi-item>
+
+    <hr>
+
+    <sdpi-item label="Color Power en Méritos Ganados">
+        <input type="checkbox" setting="gainedUsePowerColor" checked>
+    </sdpi-item>
+
+    <sdpi-item label="Custom Color en Méritos Ganados">
+        <input type="color" setting="gainedColor" value="#f07b05">
+    </sdpi-item>
+
+    <sdpi-item label="Reset Settings">
+        <button id="resetSettings">
+            Reset to Defaults
+        </button>
+    </sdpi-item>
+
+
+    <script>
+
+        const { streamDeckClient } = SDPIComponents;
+
+
+        async function loadSettings() {
+
+            const result = await streamDeckClient.getSettings();
+            const settings = result.settings ?? {};
+
+            totalFontSize.value =
+                settings.totalFontSize ?? 250;
+
+            gainedFontSize.value =
+                settings.gainedFontSize ?? 250;
+
+            totalSpeed.value =
+                settings.totalSpeed ?? 333;
+
+            gainedSpeed.value =
+                settings.gainedSpeed ?? 333;
+
+            totalY.value =
+                settings.totalY ?? 400;
+
+            gainedY.value =
+                settings.gainedY ?? 800;
+
+            document.querySelector('[setting="totalUsePowerColor"]').checked =
+                settings.totalUsePowerColor ?? false;
+
+            document.querySelector('[setting="gainedUsePowerColor"]').checked =
+                settings.gainedUsePowerColor ?? false;
+
+            document.querySelector('[setting="totalColor"]').value =
+                settings.totalColor ?? "#ffffff";
+
+            document.querySelector('[setting="gainedColor"]').value =
+                settings.gainedColor ?? "#f07b05";
+
+        }
+
+
+        async function saveSettings() {
+
+            await streamDeckClient.setSettings({
+
+                totalFontSize: Number(totalFontSize.value),
+                gainedFontSize: Number(gainedFontSize.value),
+
+                totalSpeed: Number(totalSpeed.value),
+                gainedSpeed: Number(gainedSpeed.value),
+
+                totalY: Number(totalY.value),
+                gainedY: Number(gainedY.value),
+
+                totalUsePowerColor:
+                    document.querySelector('[setting="totalUsePowerColor"]').checked,
+
+                gainedUsePowerColor:
+                    document.querySelector('[setting="gainedUsePowerColor"]').checked,
+
+                totalColor:
+                    document.querySelector('[setting="totalColor"]').value,
+
+                gainedColor:
+                    document.querySelector('[setting="gainedColor"]').value,
+
+            });
+
+        }
+
+        async function resetSettings() {
+
+            await streamDeckClient.setSettings({
+
+                totalFontSize: 250,
+                gainedFontSize: 250,
+
+                totalSpeed: 333,
+                gainedSpeed: 333,
+
+                totalY: 400,
+                gainedY: 800,
+
+                totalUsePowerColor: false,
+                gainedUsePowerColor: false,
+
+                totalColor: "#ffffff",
+                gainedColor: "#f07b05",
+
+            });
+
+            loadSettings();
+
+        }
+
+
+        loadSettings();
+
+
+        document
+            .querySelectorAll("input")
+            .forEach(input => {
+
+                input.addEventListener(
+                    "change",
+                    saveSettings
+                );
+
+            });
+
+        document
+            .getElementById("resetSettings")
+            .addEventListener(
+                "click",
+                resetSettings
+            );
+
+
+    </script>
+
+</body>
+
+</html>
